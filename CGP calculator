@@ -1,0 +1,93 @@
+
+# created empty lists to use throughout the code
+courses = []
+units = []
+marks = []
+grade = []
+unit_lis = []
+score_lis = []
+
+# new analyse function that works for any number of digits,lesser code lines though
+def analyse(user_input, a_list):
+    spi = user_input.split(",")       #this splits the input from the user and separates the comma from the other digits
+    for i in spi:
+        num = int(i)                  #this converts the values in string format into intergers
+        a_list.append(num)            #this adds the converted integers to your specified list in the function
+
+# this function collects the courses of the user and compiles it in a list
+def get_courses():
+    cos = input("Please enter your course, separate them with a comma : ")
+    course_list = cos.split(",") 			   # for the purpose of displaying the courses to the user
+    for each in course_list:
+        courses.append(each)
+
+# this function collects the units of the user and compiles it in a list
+def get_units():
+    unit = input("Enter the unit of your courses in the same order :" )
+    unit_var = unit.split(",")                  # for the purpose of displaying the units to the user
+    for z in unit_var:
+        unit_lis.append(z)
+    analyse(unit, units)
+
+# this function collects the scores of the user and compiles it in a list
+def get_scores():
+        scores = input("Please enter their respective scores: ")
+        scores_div = scores.split(",")		   # for the purpose of displaying the scores to the user
+        for score in scores_div:
+                score_lis.append(score)
+        analyse(scores, marks)
+
+# this function gives range of scores and their respective grade points particular to a school, 
+# a school's grading point system might differ from another, so you can always edit the values??
+def unit_x_mark(r, p):                      
+    for m in r:
+        if m >= 70 and m <= 100:
+            p.append(5)                         
+        elif m >= 60 and m <= 69:
+            p.append(4)
+        elif m >= 50 and m <= 59:
+            p.append(3)
+        elif m >= 45 and m <= 49:
+            p.append(2)
+        elif m >= 40 and m <= 44:
+            p.append(1)
+        elif m >= 0 and m <= 39:
+            p.append(0)
+
+def gpa_calculate():
+        unit_x_mark(marks, grade)			# this checks the scores from the user's input, finds their corresponding grade point and then add thems to the "grade" list
+        # print(grade)
+        total = sum(i*j for i, j in zip(units, grade))		# this line of code first finds the products of the values in the "units" and "grade" list, then calculates the sum their product
+        # print(total)
+        t_unit = sum(units)
+        gp = total/t_unit
+        print("This is your cumulative grade point: %.2f " % gp)
+        print("Thank you for using the gp calculator.\nHave a nice day...")
+
+def run_calc():
+        get_courses()
+        print("these are your corses: " + ",".join(courses))
+        get_units()
+        # print(units)
+        print("these are your units: " + ",".join(unit_lis))
+        get_scores()
+        # print(marks)
+        print("and these are your scores: " + ",".join(score_lis))
+        resp = input("can i proceed?(Yes/No): ").lower()
+        if resp == "yes":
+                gpa_calculate()
+        elif resp == "no":
+                redo = input("Would you like to restart your calculation?(Yes/No): ").lower()
+                if redo == "yes":
+                        courses.clear()
+                        units.clear()
+                        marks.clear()
+                        grade.clear()
+                        unit_lis.clear()
+                        score_lis.clear()
+                        run_calc()
+                elif redo == "no":
+                        print("Thank you for using the gp calculator.\nHave a nice day...")
+
+
+run_calc()
